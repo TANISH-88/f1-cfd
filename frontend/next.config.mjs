@@ -11,7 +11,9 @@ const nextConfig = {
   trailingSlash: true,
   images: {
     unoptimized: true
-  }
+  },
+  assetPrefix: '/f1-cfd',
+  basePath: '/f1-cfd'
 };
 
 export default nextConfig;
