@@ -40,6 +40,7 @@ app.add_middleware(
 )
 
 @app.get("/")
+@app.head("/")
 async def health_check():
     """Health check endpoint for Render and monitoring services"""
     return {
@@ -50,6 +51,7 @@ async def health_check():
     }
 
 @app.get("/health")
+@app.head("/health")
 async def detailed_health():
     """Detailed health check with model status"""
     return {
