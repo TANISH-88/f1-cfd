@@ -46,7 +46,7 @@ export default function Home() {
       <header className="border-b border-white/10 px-3 py-2 sm:px-4 sm:py-4 lg:px-6 lg:py-5">
         <h1 className="text-lg sm:text-xl lg:text-2xl font-semibold tracking-tight text-white">F1 CFD lab</h1>
         <p className="mt-0.5 sm:mt-1 text-[10px] sm:text-xs lg:text-sm text-slate-400">
-          <span className="hidden sm:inline">Interactive corner aerodynamics - Click track corners to change wind direction</span>
+          <span className="hidden sm:inline">(:</span>
           <span className="sm:hidden">Interactive F1 aerodynamics</span>
         </p>
         {selectedCorner && (
