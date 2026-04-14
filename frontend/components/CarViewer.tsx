@@ -1083,47 +1083,29 @@ function CarLoadingFallback() {
 }
 
 function CarModel({ color, onFitted }: { color: string; onFitted?: (dims: CarFitDimensions) => void }) {
-  const { scene } = useGLTF(CAR_MODEL_URL);
+  // Fallback: Use simple box geometry instead of GLB model
+  const meshRef = useRef<THREE.Mesh>(null);
   
-  const root = useMemo(() => {
-    const g = scene.clone() as THREE.Group;
-    g.position.set(0, 0, 0);
-    g.scale.set(1, 1, 1);
-    g.rotation.set(0, Math.PI, 0); // Flip car 180 degrees to face opposite direction
-    g.traverse((child) => {
-      if ((child as THREE.Mesh).isMesh) {
-        const m = child as THREE.Mesh;
-        m.castShadow = true;
-        m.receiveShadow = true;
-        m.material = new THREE.MeshStandardMaterial({ color: new THREE.Color(color), metalness: 0.4, roughness: 0.35 });
-      }
-    });
-    return g;
-  }, [scene, color]);
-
   useLayoutEffect(() => {
-    root.updateWorldMatrix(true, true);
-    const box = new THREE.Box3().setFromObject(root);
-    if (box.isEmpty()) return;
-    const center = box.getCenter(new THREE.Vector3());
-    const size = box.getSize(new THREE.Vector3());
-    root.position.sub(center);
-    const maxDim = Math.max(size.x, size.y, size.z, 1e-6);
-    root.scale.setScalar(FIT_MAX_EXTENT / maxDim);
-    root.updateMatrixWorld(true);
-    const box2 = new THREE.Box3().setFromObject(root);
-    const fittedSize = box2.getSize(new THREE.Vector3());
-    const hx = fittedSize.x / 2, hy = fittedSize.y / 2, hz = fittedSize.z / 2;
-    const forwardAxis: "x" | "z" = fittedSize.z >= fittedSize.x ? "z" : "x";
-    onFitted?.({
-      halfWidth: forwardAxis === "z" ? hx : hz,
-      halfHeight: hy,
-      halfLength: forwardAxis === "z" ? hz : hx,
-      forwardAxis,
-    });
-  }, [root, onFitted]);
+    if (meshRef.current) {
+      // Set up car dimensions for the box
+      const fittedSize = new THREE.Vector3(4.2, 0.45, 2.1);
+      const hx = fittedSize.x / 2, hy = fittedSize.y / 2, hz = fittedSize.z / 2;
+      onFitted?.({
+        halfWidth: hx,
+        halfHeight: hy,
+        halfLength: hz,
+        forwardAxis: "z",
+      });
+    }
+  }, [onFitted]);
 
-  return <primitive object={root} />;
+  return (
+    <mesh ref={meshRef} castShadow receiveShadow>
+      <boxGeometry args={[4.2, 0.45, 2.1]} />
+      <meshStandardMaterial color={color} metalness={0.4} roughness={0.35} />
+    </mesh>
+  );
 }
 
 function VehicleGroup({ 
