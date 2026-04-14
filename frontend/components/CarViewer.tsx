@@ -9,7 +9,7 @@ const STREAMLINE_COUNT = 864;
 const TRAIL_LEN = 25; // Longer trails for smoother appearance
 const HUG_GAP = 0.3;
 const AIR_REF = 65;
-const CAR_MODEL_URL = "/models/car.glb";
+const CAR_MODEL_URL = "https://3dvl2e8ow7.ufs.sh/f/LwXIf852qnKPgGKJSiSecVEAFohQICn87qUMBXpYHRlWuvxe";
 const FIT_MAX_EXTENT = 4.2;
 
 useGLTF.preload(CAR_MODEL_URL);
