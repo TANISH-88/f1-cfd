@@ -458,6 +458,7 @@ function sampleStreamlinePosition(
   const curve = curves[cid];
   const angleNorm = THREE.MathUtils.clamp(windAngle / 30, -1, 1);
   const crosswind = THREE.MathUtils.clamp(Math.abs(windAngle) / 30, 0, 1);
+  // Variables kept for potential future wind angle features
   curve.getPoint(t, pos);
   curve.getTangent(t, tan).normalize();
 

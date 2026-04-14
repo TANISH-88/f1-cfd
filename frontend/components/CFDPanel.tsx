@@ -131,7 +131,7 @@ const apiBase = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 export default function CFDPanel({ onResult, onControlsChange, onCornerSelect, onTrackChange, onTeamChange }: CFDPanelProps) {
   const [team, setTeam] = useState(TEAMS[0]);
   const [track, setTrack] = useState<TrackId>(TRACKS[0]);
-  const [windAngle, setWindAngle] = useState(0); // Fixed at 0 (headwind)
+  const [windAngle] = useState(0); // Fixed at 0 (headwind)
   const [carSpeed, setCarSpeed] = useState(280);
   const [windEffect, setWindEffect] = useState<WindEffectLevel>("high");
   const [drsActive, setDrsActive] = useState(false);

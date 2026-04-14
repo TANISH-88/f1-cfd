@@ -18,7 +18,7 @@ export default function Home() {
   const [selectedCorner, setSelectedCorner] = useState<string>("");
   const [currentTrack, setCurrentTrack] = useState<string>("");
   const [currentTeam, setCurrentTeam] = useState<string>("");
-  const [simWindAngle, setSimWindAngle] = useState(0);
+  const [simWindAngle] = useState(0); // Wind angle removed but keeping for future use
   const [simCarSpeed, setSimCarSpeed] = useState(280);
   const [simWindEffect, setSimWindEffect] = useState<WindEffectLevel>("high");
   const [simDrsActive, setSimDrsActive] = useState(false);
