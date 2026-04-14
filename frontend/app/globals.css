@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Ensure dark background everywhere */
+html, body {
+  background-color: #0b0d12 !important;
+  margin: 0;
+  padding: 0;
+}
+
+/* Fix any white backgrounds in canvas or WebGL contexts */
+canvas {
+  background-color: #0f1117 !important;
+}
+
+/* Ensure no white shows during loading or transitions */
+* {
+  box-sizing: border-box;
+}
+
+body * {
+  background-color: transparent;
+}

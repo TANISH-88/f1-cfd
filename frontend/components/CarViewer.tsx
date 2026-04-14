@@ -46,53 +46,53 @@ function buildAirflowCurves(d: CarFitDimensions): THREE.CatmullRomCurve3[] {
   const W = d.halfWidth;
   const H = d.halfHeight;
   const L = d.halfLength;
-  const g = HUG_GAP * 0.15; // Much tighter to body
+  const g = HUG_GAP * 0.08; // Much tighter to body for more compact simulation
   const c = (lat: number, y: number, lng: number) => carToWorld(d, lat, y, lng);
 
-  // Over nose and roof - tight to body
+  // Over nose and roof - very tight to body
   const noseRoof = crv([
-    c(0, H * 0.15, L * 1.3),
-    c(0, H * 0.25, L * 0.95),
-    c(0, H + g, L * 0.5),
+    c(0, H * 0.1, L * 1.1),
+    c(0, H * 0.2, L * 0.8),
+    c(0, H + g, L * 0.4),
     c(0, H + g, 0),
-    c(0, H + g, -L * 0.5),
-    c(0, H * 0.6, -L * 0.9),
-    c(0, H * 0.4, -L * 1.2),
+    c(0, H + g, -L * 0.4),
+    c(0, H * 0.5, -L * 0.8),
+    c(0, H * 0.3, -L * 1.0),
   ]);
 
-  // Front wing left side - hugs wing then flows under with more reactive elements
+  // Front wing left side - compact and reactive
   const frontWingPort = crv([
-    c(-W * 0.4, -H * 0.85, L * 1.25),
-    c(-W * 0.7, -H - g, L * 0.95), // Wider for wing tip vortex
-    c(-W * 0.6, -H - g * 0.8, L * 0.6),
-    c(-W * 0.5, -H - g * 0.6, L * 0.2),
-    c(-W * 0.4, -H - g * 0.4, -L * 0.1),
-    c(-W * 0.3, -H * 0.5, -L * 0.5),
-    c(-W * 0.2, -H * 0.2, -L * 0.95),
-    c(-W * 0.1, -H * 0.1, -L * 1.25),
+    c(-W * 0.3, -H * 0.7, L * 1.0),
+    c(-W * 0.5, -H - g, L * 0.8),
+    c(-W * 0.4, -H - g * 0.6, L * 0.5),
+    c(-W * 0.35, -H - g * 0.4, L * 0.1),
+    c(-W * 0.3, -H - g * 0.3, -L * 0.1),
+    c(-W * 0.25, -H * 0.4, -L * 0.4),
+    c(-W * 0.15, -H * 0.15, -L * 0.8),
+    c(-W * 0.08, -H * 0.08, -L * 1.0),
   ]);
 
-  // Front wing right side - mirror with reactive elements
+  // Front wing right side - compact mirror
   const frontWingStarboard = crv([
-    c(W * 0.4, -H * 0.85, L * 1.25),
-    c(W * 0.7, -H - g, L * 0.95), // Wider for wing tip vortex
-    c(W * 0.6, -H - g * 0.8, L * 0.6),
-    c(W * 0.5, -H - g * 0.6, L * 0.2),
-    c(W * 0.4, -H - g * 0.4, -L * 0.1),
-    c(W * 0.3, -H * 0.5, -L * 0.5),
-    c(W * 0.2, -H * 0.2, -L * 0.95),
-    c(W * 0.1, -H * 0.1, -L * 1.25),
+    c(W * 0.3, -H * 0.7, L * 1.0),
+    c(W * 0.5, -H - g, L * 0.8),
+    c(W * 0.4, -H - g * 0.6, L * 0.5),
+    c(W * 0.35, -H - g * 0.4, L * 0.1),
+    c(W * 0.3, -H - g * 0.3, -L * 0.1),
+    c(W * 0.25, -H * 0.4, -L * 0.4),
+    c(W * 0.15, -H * 0.15, -L * 0.8),
+    c(W * 0.08, -H * 0.08, -L * 1.0),
   ]);
 
-  // Sidepod flow - hugs side of car
+  // Sidepod flow - very tight to car sides
   const sidepod = crv([
-    c(W + g, -H * 0.1, L * 0.95),
-    c(W + g, -H * 0.15, L * 0.6),
-    c(W + g, -H * 0.2, L * 0.2),
-    c(W + g, -H * 0.25, -L * 0.2),
-    c(W * 0.85 + g, -H * 0.2, -L * 0.6),
-    c(W * 0.7, -H * 0.15, -L * 0.95),
-    c(W * 0.5, -H * 0.1, -L * 1.2),
+    c(W + g, -H * 0.05, L * 0.8),
+    c(W + g, -H * 0.1, L * 0.5),
+    c(W + g, -H * 0.15, L * 0.1),
+    c(W + g, -H * 0.2, -L * 0.1),
+    c(W * 0.9 + g, -H * 0.15, -L * 0.5),
+    c(W * 0.8, -H * 0.1, -L * 0.8),
+    c(W * 0.6, -H * 0.05, -L * 1.0),
   ]);
 
   // Floor - very tight under car
@@ -126,14 +126,14 @@ function buildAirflowCurves(d: CarFitDimensions): THREE.CatmullRomCurve3[] {
     c(0, 0, -L * 2.2),
   ]);
 
-  // Wake - turbulent behind car
+  // Wake - compact turbulent behind car
   const wake = crv([
-    c(0, H * 0.3, -L * 0.85),
-    c(W * 0.35, -H * 0.15, -L * 1.15),
-    c(-W * 0.45, H * 0.25, -L * 1.55),
-    c(W * 0.3, -H * 0.35, -L * 2.05),
-    c(-W * 0.2, H * 0.1, -L * 2.6),
-    c(0, 0, -L * 3.2),
+    c(0, H * 0.25, -L * 0.7),
+    c(W * 0.25, -H * 0.1, -L * 0.9),
+    c(-W * 0.3, H * 0.2, -L * 1.2),
+    c(W * 0.2, -H * 0.25, -L * 1.5),
+    c(-W * 0.15, H * 0.08, -L * 1.8),
+    c(0, 0, -L * 2.2),
   ]);
 
   // NEW: Front wheel turbulence - left
@@ -548,32 +548,32 @@ function sampleStreamlinePosition(
       pos.x += Math.sin(elapsed * 5.0 + idx * 0.8) * 0.6; // Wide turbulent wake
       pos.y += Math.cos(elapsed * 4.5 + idx * 0.7) * 0.5; // Strong vertical turbulence
       // Vortex shedding from rear wing
-      pos.x += Math.sin(elapsed * 7.0 + idx * 1.0) * 0.4;
-      pos.y += Math.cos(elapsed * 6.5 + idx * 0.9) * 0.3;
+      pos.x += Math.sin(elapsed * 7.0 + idx * 1.0) * 0.02; // Extremely compact
+      pos.y += Math.cos(elapsed * 6.5 + idx * 0.9) * 0.015; // Extremely compact
       
       // STRONG UPWARD WIND from rear wing/spoiler when DRS closed
       const rearWingZ = -d.halfLength * 0.8; // Rear wing position
       if (pos.z <= rearWingZ && pos.z >= rearWingZ - 1.0) { // Behind rear wing
         // Strong upward airflow from spoiler effect
-        pos.y += 0.8; // Strong upward wind
-        pos.x += Math.sin(elapsed * 4.0 + idx * 0.6) * 0.3; // Turbulent upward flow
+        pos.y += 0.02; // Extremely compact upward wind
+        pos.x += Math.sin(elapsed * 4.0 + idx * 0.6) * 0.02; // Extremely compact turbulent flow
         // Spoiler creates vertical wind streams
-        pos.y += Math.sin(elapsed * 5.0 + idx * 0.8) * 0.4;
+        pos.y += Math.sin(elapsed * 5.0 + idx * 0.8) * 0.01; // Extremely minimal pulsating flow
       }
     }
     
     else if (reg === StreamRegion.Top) {
       // Complex roof flow with high downforce rear wing
-      pos.y += 0.05; // Lower flow over car
-      pos.x += Math.sin(elapsed * 4.0 + idx * 0.6) * 0.25; // More lateral turbulence
+      pos.y += 0.005; // Extremely low flow over car
+      pos.x += Math.sin(elapsed * 4.0 + idx * 0.6) * 0.05; // Extremely compact lateral turbulence
       // Pressure buildup from rear wing
-      pos.y += Math.cos(elapsed * 3.5 + idx * 0.5) * 0.15;
+      pos.y += Math.cos(elapsed * 3.5 + idx * 0.5) * 0.01; // Extremely compact pressure buildup
       
       // ADDITIONAL UPWARD STREAMS from rear spoiler
       const rearWingZ = -d.halfLength * 0.8;
       if (pos.z <= rearWingZ) { // Behind rear wing
-        pos.y += 0.6; // Extra upward wind from spoiler
-        pos.y += Math.sin(elapsed * 6.0 + idx * 0.9) * 0.3; // Pulsating upward flow
+        pos.y += 0.05; // Minimal extra upward wind from spoiler
+        pos.y += Math.sin(elapsed * 6.0 + idx * 0.9) * 0.03; // Very minimal pulsating upward flow
       }
     }
     
@@ -1083,29 +1083,58 @@ function CarLoadingFallback() {
 }
 
 function CarModel({ color, onFitted }: { color: string; onFitted?: (dims: CarFitDimensions) => void }) {
-  // Fallback: Use simple box geometry instead of GLB model
-  const meshRef = useRef<THREE.Mesh>(null);
-  
-  useLayoutEffect(() => {
-    if (meshRef.current) {
-      // Set up car dimensions for the box
-      const fittedSize = new THREE.Vector3(4.2, 0.45, 2.1);
-      const hx = fittedSize.x / 2, hy = fittedSize.y / 2, hz = fittedSize.z / 2;
-      onFitted?.({
-        halfWidth: hx,
-        halfHeight: hy,
-        halfLength: hz,
-        forwardAxis: "z",
-      });
-    }
-  }, [onFitted]);
+  const { scene } = useGLTF(CAR_MODEL_URL);
+  const groupRef = useRef<THREE.Group>(null);
 
-  return (
-    <mesh ref={meshRef} castShadow receiveShadow>
-      <boxGeometry args={[4.2, 0.45, 2.1]} />
-      <meshStandardMaterial color={color} metalness={0.4} roughness={0.35} />
-    </mesh>
-  );
+  useLayoutEffect(() => {
+    if (!scene || !groupRef.current) return;
+
+    // Rotate car 180 degrees around Y-axis to face correct direction
+    scene.rotation.set(0, Math.PI, 0);
+
+    const box = new THREE.Box3().setFromObject(scene);
+    const size = box.getSize(new THREE.Vector3());
+    const center = box.getCenter(new THREE.Vector3());
+
+    // Scale to fit within FIT_MAX_EXTENT
+    const maxDim = Math.max(size.x, size.y, size.z);
+    const scale = FIT_MAX_EXTENT / maxDim;
+    scene.scale.setScalar(scale);
+
+    // Center the model and place it on the platform
+    scene.position.copy(center.multiplyScalar(-scale));
+    scene.position.y = -0.25; // Fixed position on platform
+
+    // Calculate fitted dimensions
+    const fittedSize = size.multiplyScalar(scale);
+    const hx = fittedSize.x / 2, hy = fittedSize.y / 2, hz = fittedSize.z / 2;
+
+    // Determine forward axis based on model orientation
+    const forwardAxis: "x" | "z" = fittedSize.z > fittedSize.x ? "z" : "x";
+
+    onFitted?.({
+      halfWidth: forwardAxis === "z" ? hx : hz,
+      halfHeight: hy,
+      halfLength: forwardAxis === "z" ? hz : hx,
+      forwardAxis,
+    });
+  }, [scene, onFitted]); // Removed 'color' from dependencies
+
+  // Separate effect for color changes only
+  useLayoutEffect(() => {
+    if (!scene) return;
+    
+    // Apply color to all meshes without affecting position
+    scene.traverse((child) => {
+      if (child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial) {
+        child.material.color.set(color);
+        child.castShadow = true;
+        child.receiveShadow = true;
+      }
+    });
+  }, [scene, color]);
+
+  return <primitive ref={groupRef} object={scene} />;
 }
 
 function VehicleGroup({ 
@@ -1184,6 +1213,7 @@ function SceneContent({
 }) {
   return (
     <>
+      <color attach="background" args={["#0f1117"]} />
       <ambientLight intensity={0.35} />
       <directionalLight position={[8, 12, 6]} intensity={1.2} castShadow shadow-mapSize-width={1024} shadow-mapSize-height={1024} />
       <VehicleGroup 
@@ -1219,6 +1249,7 @@ export type CarViewerProps = {
   selectedCorner?: string;
   currentTrack?: string;
   currentTeam?: string;
+  predictionData?: PredictResponse | null;
 };
 
 export default function CarViewer({ 
@@ -1512,9 +1543,14 @@ export default function CarViewer({
       <Canvas 
         shadows 
         camera={{ position: [0, 2, 10], fov: 45 }} 
-        gl={{ antialias: true, alpha: false, preserveDrawingBuffer: false }} 
+        gl={{ 
+          antialias: true, 
+          alpha: false, 
+          preserveDrawingBuffer: false,
+          clearColor: "#0f1117" // Set dark background color
+        }} 
         dpr={[1, 2]}
-        style={{ width: '100%', height: '100%' }}
+        style={{ width: '100%', height: '100%', backgroundColor: '#0f1117' }}
       >
         <SceneContent 
           key={`wind-simulation-${Math.floor(windAngle / 5) * 5}-${windDirection}-${turnDirection}-${drsActive ? 'closed' : 'open'}`} 

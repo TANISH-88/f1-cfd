@@ -134,7 +134,7 @@ export default function CFDPanel({ onResult, onControlsChange, onCornerSelect, o
   const [windAngle] = useState(0); // Fixed at 0 (headwind)
   const [carSpeed, setCarSpeed] = useState(280);
   const [windEffect, setWindEffect] = useState<WindEffectLevel>("high");
-  const [drsActive, setDrsActive] = useState(false);
+  const [drsActive, setDrsActive] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [last, setLast] = useState<PredictResponse | null>(null);
